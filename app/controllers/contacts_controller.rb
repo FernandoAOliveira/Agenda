@@ -10,6 +10,7 @@ class ContactsController < ApplicationController
 
   def new
     @contact = Contact.new
+    @contact.build_address
   end
 
   def create
@@ -44,7 +45,9 @@ class ContactsController < ApplicationController
   end
 
   def contact_params
-    params.require(:contact).permit(:name)
+    params.require(:contact).permit(:name,
+      address_attributes: [:street, :number, :neighborhood],
+      phones_attributes: [:number]
+    )
   end
-
 end
